@@ -69,7 +69,6 @@
         }else{
             [weakSelf.controlView controlPlayItem:weakAVPlayer.currentItem];
         }
-        NSLog(@"%f",progress);
     }];
     
     //将控制视图移到最上方

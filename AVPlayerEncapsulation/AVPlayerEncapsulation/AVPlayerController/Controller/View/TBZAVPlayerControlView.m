@@ -259,8 +259,6 @@
     _isFull = isFull;
     if (isFull) {
         [_fullBtn setImage:[UIImage imageNamed:@"min"] forState:UIControlStateNormal];
-        
-        
     }else{
         [_fullBtn setImage:[UIImage imageNamed:@"full"] forState:UIControlStateNormal];
     }
@@ -272,14 +270,14 @@
     NSLog(@"touchesBegan");
     
     if (isShow) {
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:0.25 animations:^{
             self.topControlView.alpha = 0;
             self.botControlView.alpha = 0;
         } completion:^(BOOL finished) {
             self->isShow = !self->isShow;
         }];
     }else{
-        [UIView animateWithDuration:0.5 animations:^{
+        [UIView animateWithDuration:0.25 animations:^{
             self.topControlView.alpha = 1;
             self.botControlView.alpha = 1;
         } completion:^(BOOL finished) {
