@@ -1,0 +1,6 @@
+platform :ios, '9.3'
+use_frameworks!
+
+target 'AVPlayerEncapsulation' do
+  pod 'Masonry', '~>1.0.0'
+end
