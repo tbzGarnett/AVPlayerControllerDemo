@@ -14,8 +14,14 @@ typedef void (^ChooseBlock)(NSInteger i);
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TBZAVPlayerViewController : UIViewController
+
 @property (nonatomic, strong) TBZAVPlayerView *playerView;
 
+/**
+ VC和present的block连接
+
+ @param block 传递block
+ */
 - (void)btnClickMethod:(ChooseBlock)block;
 
 @end

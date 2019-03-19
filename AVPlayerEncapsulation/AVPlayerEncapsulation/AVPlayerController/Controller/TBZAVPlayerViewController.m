@@ -30,11 +30,6 @@
 
 @implementation TBZAVPlayerViewController
 
-//- (void)viewWillDisappear:(BOOL)animated{
-//    [super viewWillDisappear:animated];
-//    [self.playerView destroy];
-//}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -64,6 +59,7 @@
     }
 }
 
+#pragma mark lazy load
 - (void)chooseEpisode:(UIButton *)sender{
     if (self.block) {
         self.block(sender.tag - 100);
@@ -92,7 +88,7 @@
     self.block = block;
 }
 
-
+#pragma mark - TBZAVPlayerViewDelegate
 - (void)fullBtnAction:(BOOL)isFull{
     if (isFull) {
         //退出全屏
@@ -113,6 +109,11 @@
     }
 }
 
+- (void)playEnd{
+    [self.avPresent playEnd:self];
+}
+
+#pragma mark - 进入全屏和退出全屏的动画和present处理
 - (void)enterFullScreen:(BOOL)rightOrLeft{
     playViewBeforeRect = _playerView.frame;
     playViewBeforeCenter = _playerView.center;
@@ -154,6 +155,7 @@
     NSLog(@"dealloc");
 }
 
+#pragma mark - 监听屏幕旋转
 - (void)deviceOrientationDidChange{
     switch (UIDevice.currentDevice.orientation) {
         case UIDeviceOrientationPortrait:

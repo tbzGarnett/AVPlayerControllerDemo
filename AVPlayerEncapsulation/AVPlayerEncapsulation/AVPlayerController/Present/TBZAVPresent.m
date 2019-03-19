@@ -13,6 +13,8 @@
 
 @interface TBZAVPresent()
 @property (nonatomic, strong) NSMutableArray *dataArr;
+
+@property (nonatomic, assign) NSInteger playIndex;
 @end
 
 @implementation TBZAVPresent
@@ -21,10 +23,18 @@
     [self loadData];
     
     [playerViewController.playerView parseData:self.dataArr[0]];
+    _playIndex = 0;
     __weak TBZAVPresent *weakself = self;
+    __weak TBZAVPlayerViewController *weakPlayerVC = playerViewController;
     [playerViewController btnClickMethod:^(NSInteger i) {
-        [playerViewController.playerView parseData:weakself.dataArr[i]];
+        [weakPlayerVC.playerView parseData:weakself.dataArr[i]];
+        weakself.playIndex = i;
     }];
+}
+
+- (void)playEnd:(TBZAVPlayerViewController *)playerViewController{
+    [playerViewController.playerView parseData:self.dataArr[self.dataArr.count - 1 -self.playIndex]];
+    self.playIndex = self.dataArr.count-1-self.playIndex;
 }
 
 - (void)loadData{

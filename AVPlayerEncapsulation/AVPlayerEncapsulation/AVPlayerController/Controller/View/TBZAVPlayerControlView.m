@@ -28,6 +28,10 @@
 
 @property (nonatomic, strong) UIButton *fullBtn;
 
+@property (nonatomic, strong) UISlider *timeSlider;
+
+@property (nonatomic, strong) UILabel *timeLabel;
+
 @end
 
 @implementation TBZAVPlayerControlView
@@ -77,39 +81,64 @@
         make.centerY.mas_equalTo(self.botControlView);
         make.size.mas_offset(CGSizeMake(18, 18));
     }];
+    [self.botControlView addSubview:self.timeLabel];
+    [self.timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.playBtn.mas_right).with.offset(10);
+        make.centerY.mas_equalTo(self.botControlView);
+//        make.width.mas_offset(100);
+//        make.height.mas_offset(20);
+    }];
+    [self.botControlView addSubview:self.timeSlider];
+    [self.timeSlider mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.fullBtn.mas_left).with.offset(-10);
+        make.left.equalTo(self.timeLabel.mas_right).with.offset(10);
+        make.centerY.mas_equalTo(self.botControlView);
+        make.height.mas_offset(15);
+    }];
     
     isShow = YES;
     isReadToPlay = NO;
     self.isFull = NO;
 }
-
+#pragma mark - 入口parseData方法
 - (void)parseData:(TBZAVPlayerModel *)playerModel{
     self.titleLab.text = playerModel.title;
 }
 
-- (void)controlItemStatus:(AVPlayerItemStatus)status{
+#pragma mark - AVPlayerItem 和 AVPlayer 的监听 处理方法
+- (void)controlItemStatus:(AVPlayerItemStatus)status playItem:(nonnull AVPlayerItem *)item{
     switch (status) {
         case AVPlayerItemStatusFailed:
             NSLog(@"item 有误");
             isReadToPlay = NO;
             [_playBtn setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+            _timeLabel.text = @"00:00/00:00";
             break;
         case AVPlayerItemStatusReadyToPlay:
-            NSLog(@"准好播放了");
+            NSLog(@"准备好播放了");
             isReadToPlay = YES;
             [_playBtn setImage:[UIImage imageNamed:@"pause"] forState:UIControlStateNormal];
 //            self.avSlider.maximumValue = self.item.duration.value / self.item.duration.timescale;
+            _timeLabel.text = [NSString stringWithFormat:@"%@/%@",[self stringFromFloat:CMTimeGetSeconds(item.currentTime)],[self stringFromFloat:CMTimeGetSeconds(item.duration)]];
+            _timeSlider.maximumValue = CMTimeGetSeconds(item.duration);
             break;
         case AVPlayerItemStatusUnknown:
             NSLog(@"视频资源出现未知错误");
             isReadToPlay = NO;
             [_playBtn setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+            _timeLabel.text = @"00:00/00:00";
             break;
         default:
             break;
     }
 }
 
+- (void)controlPlayItem:(AVPlayerItem *)item{
+    _timeLabel.text = [NSString stringWithFormat:@"%@/%@",[self stringFromFloat:CMTimeGetSeconds(item.currentTime)],[self stringFromFloat:CMTimeGetSeconds(item.duration)]];
+    _timeSlider.value = CMTimeGetSeconds(item.currentTime);
+}
+
+#pragma mark - 控制面板的按钮点击方法
 - (void)playPauseClick{
     if (self.delegate && [self.delegate respondsToSelector:@selector(playPauseBtnClick)]) {
         BOOL isPlay = [self.delegate playPauseBtnClick];
@@ -133,10 +162,15 @@
     }
 }
 
+#pragma mark - 进度条滑块
+- (void)sliderValueChanged:(UISlider *)slider{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(sliderValueChanged:)]) {
+        [self.delegate sliderValueChanged:slider.value];
+    }
+}
 
 
-
-
+#pragma mark - lazy load
 - (UIView *)topControlView{
     if (!_topControlView) {
         _topControlView = [[UIView alloc] init];
@@ -188,6 +222,23 @@
     return _fullBtn;
 }
 
+- (UILabel *)timeLabel{
+    if (!_timeLabel) {
+        _timeLabel = [[UILabel alloc] init];
+        _timeLabel.textColor = [UIColor whiteColor];
+        _timeLabel.font = [UIFont systemFontOfSize:14.0f];
+    }
+    return _timeLabel;
+}
+
+- (UISlider *)timeSlider{
+    if (!_timeSlider) {
+        _timeSlider = [[UISlider alloc] init];
+        [_timeSlider addTarget:self action:@selector(sliderValueChanged:) forControlEvents:UIControlEventValueChanged];
+    }
+    return _timeSlider;
+}
+
 - (void)setTopControlHeight:(CGFloat)topControlHeight{
     _topControlHeight = topControlHeight;
     
@@ -208,10 +259,14 @@
     _isFull = isFull;
     if (isFull) {
         [_fullBtn setImage:[UIImage imageNamed:@"min"] forState:UIControlStateNormal];
+        
+        
     }else{
         [_fullBtn setImage:[UIImage imageNamed:@"full"] forState:UIControlStateNormal];
     }
 }
+
+#pragma mark - touchBegan
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     NSLog(@"touchesBegan");
@@ -231,6 +286,29 @@
             self->isShow = !self->isShow;
         }];
     }
+}
+
+#pragma mark - 秒数转字符串
+- (NSString *)stringFromFloat:(CGFloat)floatVal{
+    NSInteger intVal = [[NSNumber numberWithFloat:floatVal] integerValue];
+    
+    NSString *minunt;
+    if (intVal / 60 >= 10) {
+        minunt = [NSString stringWithFormat:@"%ld",intVal/60];
+    }else{
+        minunt = [NSString stringWithFormat:@"0%ld",intVal/60];
+    }
+    
+    NSString *second;
+    if (intVal%60 >= 10) {
+        second = [NSString stringWithFormat:@"%ld",intVal%60];
+    }else{
+        second = [NSString stringWithFormat:@"0%ld",intVal%60];
+    }
+    
+    NSString *string = [NSString stringWithFormat:@"%@:%@",minunt,second];
+    
+    return string;
 }
 
 @end

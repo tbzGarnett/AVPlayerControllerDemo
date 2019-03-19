@@ -26,6 +26,7 @@
     return NO;
 }
 
+#pragma mark - 直接根据type强制将屏幕旋转
 - (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation{
     if (self.type) {
         return UIInterfaceOrientationLandscapeLeft;

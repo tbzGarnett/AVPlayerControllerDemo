@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TBZAVPresent : NSObject
 - (void)addView:(TBZAVPlayerViewController *)playerViewController;
+
+- (void)playEnd:(TBZAVPlayerViewController *)playerViewController;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -15,6 +15,8 @@
 
 - (void)backBtnClick;
 
+- (void)playEnd;
+
 @end
 
 NS_ASSUME_NONNULL_BEGIN
@@ -23,12 +25,26 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) id<TBZAVPlayerViewDelegate> delegate;
 
+/**
+ 播放模型的传递
+
+ @param playerModel 播放model
+ */
 - (void)parseData:(TBZAVPlayerModel *)playerModel;
 
+/**
+ 销毁，处理一些置空，取消监听
+ */
 - (void)destroy;
 
+/**
+ 进入全屏，处理一下AVPlayerLayer的frame
+ */
 - (void)enterFull;
 
+/**
+ 退出全屏，处理一下AVPlayerLayer的frame
+ */
 - (void)exitFull;
 @end
 
