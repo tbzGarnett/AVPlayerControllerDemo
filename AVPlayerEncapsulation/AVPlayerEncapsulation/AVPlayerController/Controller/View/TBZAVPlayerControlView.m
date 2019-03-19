@@ -20,6 +20,8 @@
 
 @property (nonatomic, strong) UILabel *titleLab;
 
+@property (nonatomic, strong) UIButton *backBtn;
+
 @property (nonatomic, strong) UIView *botControlView;
 
 @property (nonatomic, strong) UIButton *playBtn;
@@ -49,6 +51,13 @@
     [self.titleLab mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.bottom.mas_equalTo(self.topControlView);
         make.centerX.mas_equalTo(self.topControlView);
+        make.left.mas_equalTo(self.topControlView).with.offset(40);
+    }];
+    [self.topControlView addSubview:self.backBtn];
+    [self.backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(self.topControlView).with.offset(15);
+        make.centerY.mas_equalTo(self.topControlView);
+        make.size.mas_offset(CGSizeMake(20, 20));
     }];
     
     [self addSubview:self.botControlView];
@@ -71,7 +80,7 @@
     
     isShow = YES;
     isReadToPlay = NO;
-    _isFull = NO;
+    self.isFull = NO;
 }
 
 - (void)parseData:(TBZAVPlayerModel *)playerModel{
@@ -114,12 +123,13 @@
 
 - (void)fullAction{
     if (self.delegate && [self.delegate respondsToSelector:@selector(fullBtnAction:)]) {
-        _isFull = [self.delegate fullBtnAction:_isFull];
-        if (_isFull) {
-            [_fullBtn setImage:[UIImage imageNamed:@"min"] forState:UIControlStateNormal];
-        }else{
-            [_fullBtn setImage:[UIImage imageNamed:@"full"] forState:UIControlStateNormal];
-        }
+        [self.delegate fullBtnAction:_isFull];
+    }
+}
+
+- (void)backAction{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(backBtnClick)]) {
+        [self.delegate backBtnClick];
     }
 }
 
@@ -153,6 +163,15 @@
     return _titleLab;
 }
 
+- (UIButton *)backBtn{
+    if (!_backBtn) {
+        _backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_backBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
+        [_backBtn addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _backBtn;
+}
+
 - (UIButton *)playBtn{
     if (!_playBtn) {
         _playBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -164,7 +183,6 @@
 - (UIButton *)fullBtn{
     if (!_fullBtn) {
         _fullBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_fullBtn setImage:[UIImage imageNamed:@"full"] forState:UIControlStateNormal];
         [_fullBtn addTarget:self action:@selector(fullAction) forControlEvents:UIControlEventTouchUpInside];
     }
     return _fullBtn;
@@ -184,6 +202,15 @@
     [self.botControlView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.height.mas_offset(botControlHeight);
     }];
+}
+
+- (void)setIsFull:(BOOL)isFull{
+    _isFull = isFull;
+    if (isFull) {
+        [_fullBtn setImage:[UIImage imageNamed:@"min"] forState:UIControlStateNormal];
+    }else{
+        [_fullBtn setImage:[UIImage imageNamed:@"full"] forState:UIControlStateNormal];
+    }
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{

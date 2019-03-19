@@ -73,7 +73,7 @@
 - (TBZAVPlayerView *)playerView{
     if (!_playerView) {
         _playerView = [[TBZAVPlayerView alloc] init];
-        _playerView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width*0.6);
+        _playerView.frame = CGRectMake(0, StatusBarAndNavigationBarHeight, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width*0.6);
         _playerView.delegate = self;
         _playerView.backgroundColor = [UIColor grayColor];
     }
@@ -93,15 +93,23 @@
 }
 
 
-- (BOOL)fullBtnAction:(BOOL)isFull{
+- (void)fullBtnAction:(BOOL)isFull{
     if (isFull) {
         //退出全屏
         [self exitFullScreen];
-        return NO;
     }else{
         //进入全屏
         [self enterFullScreen:NO];
-        return YES;
+    }
+}
+
+- (void)backBtnClick{
+    if (isFull) {
+        [self exitFullScreen];
+    }else{
+        [self.navigationController popViewControllerAnimated:YES];
+        [self.playerView destroy];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
     }
 }
 
@@ -153,7 +161,7 @@
             if (isFull) {
                 [self exitFullScreen];
             }else{
-                
+                [self.playerView exitFull];
             }
         }
             break;

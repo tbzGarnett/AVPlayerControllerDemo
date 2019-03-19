@@ -40,6 +40,8 @@
 - (void)parseData:(TBZAVPlayerModel *)playerModel{
     NSLog(@"%@",playerModel.title);
     
+    [self.controlView parseData:playerModel];
+    
     [self destroy];
     
     self.playerItem = [AVPlayerItem playerItemWithURL:[[NSURL alloc] initFileURLWithPath:playerModel.playLink]];
@@ -65,7 +67,6 @@
 }
 
 - (void)destroy{
-    [self.playerItem removeObserver:self forKeyPath:@"status"];
     if (self.player || self.playerItem || self.playerLayer) {
         [self.player pause];
         [self.playerItem removeObserver:self forKeyPath:@"status"];
@@ -77,10 +78,12 @@
 
 - (void)enterFull{
     self.playerLayer.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+    self.controlView.isFull = YES;
 }
 
 - (void)exitFull{
     self.playerLayer.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.width*0.6);
+    self.controlView.isFull = NO;
 }
 
 - (BOOL)playPauseBtnClick{
@@ -93,12 +96,16 @@
     }
 }
 
-- (BOOL)fullBtnAction:(BOOL)isFull{
+- (void)fullBtnAction:(BOOL)isFull{
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(fullBtnAction:)]) {
-        return [self.delegate fullBtnAction:isFull];
-    }else{
-        return isFull;
+        [self.delegate fullBtnAction:isFull];
+    }
+}
+
+- (void)backBtnClick{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(backBtnClick)]) {
+        [self.delegate backBtnClick];
     }
 }
 

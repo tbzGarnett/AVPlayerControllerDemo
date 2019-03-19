@@ -11,7 +11,9 @@
 
 @protocol TBZAVPlayerViewDelegate <NSObject>
 
-- (BOOL)fullBtnAction:(BOOL)isFull;
+- (void)fullBtnAction:(BOOL)isFull;
+
+- (void)backBtnClick;
 
 @end
 

@@ -14,7 +14,9 @@
 
 - (BOOL)playPauseBtnClick;
 
-- (BOOL)fullBtnAction:(BOOL)isFull;
+- (void)fullBtnAction:(BOOL)isFull;
+
+- (void)backBtnClick;
 
 @end
 
