@@ -10,6 +10,8 @@
 		185E2637223F8B3C007EF1E7 /* TBZAVFullViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 185E2636223F8B3C007EF1E7 /* TBZAVFullViewController.m */; };
 		188768212240A30500111DBD /* TBZAVPlayerControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1887681E2240A30500111DBD /* TBZAVPlayerControlView.m */; };
 		188768222240A30500111DBD /* TBZAVPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 188768202240A30500111DBD /* TBZAVPlayerView.m */; };
+		1887683F2240F1DE00111DBD /* 001_Super_Why_The_Three_Little_Pigs.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 1887683E2240F1DE00111DBD /* 001_Super_Why_The_Three_Little_Pigs.mp4 */; };
+		188768412240F1F400111DBD /* 混沌大学1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 188768402240F1F400111DBD /* 混沌大学1.mp4 */; };
 		189ED421223F2E790068B5FF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 189ED420223F2E790068B5FF /* AppDelegate.m */; };
 		189ED424223F2E790068B5FF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 189ED423223F2E790068B5FF /* ViewController.m */; };
 		189ED427223F2E790068B5FF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 189ED425223F2E790068B5FF /* Main.storyboard */; };
@@ -48,6 +50,8 @@
 		1887681E2240A30500111DBD /* TBZAVPlayerControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBZAVPlayerControlView.m; sourceTree = "<group>"; };
 		1887681F2240A30500111DBD /* TBZAVPlayerControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBZAVPlayerControlView.h; sourceTree = "<group>"; };
 		188768202240A30500111DBD /* TBZAVPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBZAVPlayerView.m; sourceTree = "<group>"; };
+		1887683E2240F1DE00111DBD /* 001_Super_Why_The_Three_Little_Pigs.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 001_Super_Why_The_Three_Little_Pigs.mp4; sourceTree = "<group>"; };
+		188768402240F1F400111DBD /* 混沌大学1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "混沌大学1.mp4"; sourceTree = "<group>"; };
 		189ED41C223F2E790068B5FF /* AVPlayerEncapsulation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AVPlayerEncapsulation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		189ED41F223F2E790068B5FF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		189ED420223F2E790068B5FF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -147,6 +151,8 @@
 				189ED42A223F2E7A0068B5FF /* LaunchScreen.storyboard */,
 				189ED42D223F2E7A0068B5FF /* Info.plist */,
 				189ED42E223F2E7A0068B5FF /* main.m */,
+				1887683E2240F1DE00111DBD /* 001_Super_Why_The_Three_Little_Pigs.mp4 */,
+				188768402240F1F400111DBD /* 混沌大学1.mp4 */,
 			);
 			path = AVPlayerEncapsulation;
 			sourceTree = "<group>";
@@ -331,8 +337,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				188768412240F1F400111DBD /* 混沌大学1.mp4 in Resources */,
 				189ED42C223F2E7A0068B5FF /* LaunchScreen.storyboard in Resources */,
 				189ED429223F2E7A0068B5FF /* Assets.xcassets in Resources */,
+				1887683F2240F1DE00111DBD /* 001_Super_Why_The_Three_Little_Pigs.mp4 in Resources */,
 				189ED427223F2E790068B5FF /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

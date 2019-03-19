@@ -43,7 +43,7 @@
     for (int i = 0; i<2; i++) {
         TBZAVPlayerModel *model = [[TBZAVPlayerModel alloc] init];
         if (i == 0) {
-            model.title = @"剑桥国际少儿英语Kid＇s Box 2第3单元小故事";
+            model.title = @"001_Super_Why_The_Three_Little_Pigs";
             
         }else{
             model.title = @"混沌大学1";
